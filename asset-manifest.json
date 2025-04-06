@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/your-repo-name/static/css/main.8d13e83d.css",
-    "main.js": "/your-repo-name/static/js/main.27ed981f.js",
-    "static/media/Logo.png": "/your-repo-name/static/media/Logo.79449031a8a4ed0729c3.png",
-    "static/media/Settings.svg": "/your-repo-name/static/media/Settings.c22022308bd893dcbb03ed386d888f01.svg",
-    "index.html": "/your-repo-name/index.html",
-    "main.8d13e83d.css.map": "/your-repo-name/static/css/main.8d13e83d.css.map",
-    "main.27ed981f.js.map": "/your-repo-name/static/js/main.27ed981f.js.map"
+    "main.css": "/DiplomChatApp/static/css/main.8d13e83d.css",
+    "main.js": "/DiplomChatApp/static/js/main.d5865707.js",
+    "static/media/Logo.png": "/DiplomChatApp/static/media/Logo.79449031a8a4ed0729c3.png",
+    "static/media/Settings.svg": "/DiplomChatApp/static/media/Settings.c22022308bd893dcbb03ed386d888f01.svg",
+    "index.html": "/DiplomChatApp/index.html",
+    "main.8d13e83d.css.map": "/DiplomChatApp/static/css/main.8d13e83d.css.map",
+    "main.d5865707.js.map": "/DiplomChatApp/static/js/main.d5865707.js.map"
   },
   "entrypoints": [
     "static/css/main.8d13e83d.css",
-    "static/js/main.27ed981f.js"
+    "static/js/main.d5865707.js"
   ]
 }
