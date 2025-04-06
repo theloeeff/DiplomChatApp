@@ -1,0 +1,77 @@
+.Topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+
+    background-color: rgb(255, 255, 255);
+    padding: 16px;
+
+    color: rgb(170, 170, 170);
+    vertical-align: middle;
+    font-family: "Roboto Condensed", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: ultra-expanded;
+
+    font-size: 24px;
+}
+
+.Topbar .Logo {
+    margin-right: 4px;
+
+    width: 48px;
+    height: 48px;
+    vertical-align: middle;
+}
+
+.Profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ProfilePicture {
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: white;
+
+    aspect-ratio: 1 / 1;
+}
+
+.ProfileName {
+    font-size: 14px;
+}
+
+.IconContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.Icon {
+    aspect-ratio: 1/1;
+}
+
+.Icon .IconSVG {
+    fill: rgb(210, 210, 210) !important;
+
+    width: 32px;
+    height: 32px;
+
+    cursor: pointer;
+}
+
+.Icon .IconSVG path {
+    fill: rgb(210, 210, 210) !important;
+
+    transition: fill 0.1s ease-out 10ms
+}
+
+.Icon:hover .IconSVG path {
+    fill: rgb(77, 112, 183) !important;
+}
+
