@@ -25,7 +25,7 @@ const CreateChat = ({ token, userId, onChatCreated }) => {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/chat',
+        `${process.env.REACT_APP_API_URL}/chat`,
         { chat_name: chatName, user: userId, participants },
         { headers: { Authorization: `Bearer ${token}` } }
       );

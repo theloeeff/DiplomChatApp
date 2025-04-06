@@ -15,8 +15,8 @@ const Login = ({ onLogin }) => {
 
         try {
             const url = isRegistering 
-                ? 'http://localhost:5000/users/register' 
-                : 'http://localhost:5000/users/login';
+                ? `${process.env.REACT_APP_API_URL}/users/register` 
+                : `${process.env.REACT_APP_API_URL}/users/login`;
 
             const response = await axios.post(url, { username, password });
             console.log('Response data:', response.data);

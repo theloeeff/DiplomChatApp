@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import Login from './Login';
 import CreateChat from './CreateChat';
 
-const socket = io('http://localhost:5000');
+const socket = io(process.env.REACT_APP_API_URL);
 
 const ChatApp = () => {
   const [user, setUser] = useState(null);
@@ -28,7 +28,7 @@ const ChatApp = () => {
 
     const fetchChats = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/chats', {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/chats`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setChats(response.data);
@@ -45,7 +45,7 @@ const ChatApp = () => {
 
     const fetchMessages = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/chat/${selectedChat}/getmessages`, {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/chat/${selectedChat}/getmessages`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setMessages(response.data);
@@ -65,7 +65,7 @@ const ChatApp = () => {
 
     try {
         // Сначала отправляем сообщение через API
-        await axios.post(`http://localhost:5000/chat/${selectedChat}/message`, newMessage, {
+        await axios.post(`${process.env.REACT_APP_API_URL}/chat/${selectedChat}/message`, newMessage, {
             headers: { Authorization: `Bearer ${token}` }
         });
         
@@ -125,7 +125,7 @@ useEffect(() => {
         ))}
       </div>
       <CreateChat token={token} userId={user.id} onChatCreated={() => {
-        axios.get('http://localhost:5000/chats', {
+        axios.get(`${process.env.REACT_APP_API_URL}/chats`, {
           headers: { Authorization: `Bearer ${token}` }
         })
         .then(res => setChats(res.data))
