@@ -1,7 +1,7 @@
 {
   "name": "chat-frontend",
   "version": "0.1.0",
-  "homepage": "https://yourusername.github.io/your-repo-name",
+  "homepage": "https://theloeeff.github.io/DiplomChatApp",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
