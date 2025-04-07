@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
-import Login from './Login';
+import Auth from './Login';
 import CreateChat from './CreateChat';
 
 const socket = io(process.env.REACT_APP_API_URL);
@@ -108,7 +108,7 @@ useEffect(() => {
 
 
   if (!user) return (
-    <Login onLogin={(token, user) => {
+    <Auth onLogin={(token, user) => {
       setToken(token);
       setUser(user);
     }} />
