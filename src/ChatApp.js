@@ -73,8 +73,8 @@ const ChatApp = () => {
         socket.emit('sendMessage', newMessage);
 
         // Добавляем сообщение в список сообщений на клиенте
-        setMessages(prev => [...prev, newMessage]);
-        setMessage('');
+        //setMessages(prev => [...prev, newMessage]);
+        //setMessage('');
     } catch (error) {
         console.error('Ошибка отправки сообщения:', error);
     }
