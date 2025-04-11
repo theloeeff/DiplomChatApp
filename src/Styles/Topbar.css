@@ -75,3 +75,15 @@
     fill: rgb(77, 112, 183) !important;
 }
 
+.SettingsPopup {
+    position: absolute;
+    top: 60px; /* Adjust based on your Topbar height */
+    right: 20px;
+    z-index: 1000;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 280px;
+  }
