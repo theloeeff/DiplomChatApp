@@ -21,10 +21,9 @@ const Settings = ({ token, user, setUser, closeSettings }) => {
     setError(null);
 
     try {
-      // Start with a copy of the current user
       let updatedUser = { ...user };
 
-      // If a non-empty nickname is provided, update it
+      // Update nickname if provided
       if (nickname.trim() !== '') {
         const nicknameResponse = await axios.put(
           `${process.env.REACT_APP_API_URL}/users/nickname`,
@@ -34,18 +33,18 @@ const Settings = ({ token, user, setUser, closeSettings }) => {
         updatedUser = { ...updatedUser, nickname: nicknameResponse.data.user.nickname };
       }
 
-      // If a new profile picture is selected, upload it
+      // Update profile picture if a file is selected
       if (profilePicture) {
         const formData = new FormData();
-        formData.append('profilePicture', profilePicture); // Append the file correctly
+        formData.append('profilePicture', profilePicture);
       
         const pfpResponse = await axios.put(
           `${process.env.REACT_APP_API_URL}/users/profile-picture`,
-          formData,  // Send formData directly
+          formData,
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              'Content-Type': 'multipart/form-data'  // Ensure Content-Type is set for file upload
+              'Content-Type': 'multipart/form-data'
             }
           }
         );
@@ -53,17 +52,38 @@ const Settings = ({ token, user, setUser, closeSettings }) => {
         updatedUser = { ...updatedUser, profilePicture: pfpResponse.data.user.profilePicture };
       }
 
-      // Update user state and localStorage so changes persist across sessions
       setUser(updatedUser);
       localStorage.setItem('user', JSON.stringify(updatedUser));
 
-      // Optionally close the settings menu after saving
       if (closeSettings) closeSettings();
     } catch (err) {
       console.error('Error updating settings:', err);
       setError('Не удалось обновить настройки');
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Logout handler: clears token and user from localStorage and resets user state
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setUser(null);
+  };
+
+  // Toggle 2FA handler: calls the backend and updates user state accordingly.
+  const handleToggle2FA = async () => {
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/users/toggle-2fa`,
+        { userId: user.id },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      const updatedUser = { ...user, twoFAEnabled: res.data.twoFAEnabled };
+      setUser(updatedUser);
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+    } catch (err) {
+      console.error('Error toggling 2FA:', err);
     }
   };
 
@@ -92,6 +112,14 @@ const Settings = ({ token, user, setUser, closeSettings }) => {
           {loading ? 'Сохранение...' : 'Сохранить'}
         </button>
       </form>
+      
+      {/* Additional controls for logout and 2FA toggle */}
+      <div className="settings-extra">
+        <button onClick={handleLogout} className="settings-btn">Logout</button>
+        <button onClick={handleToggle2FA} className="settings-btn">
+          {user.twoFAEnabled ? 'Disable 2FA' : 'Enable 2FA'}
+        </button>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-/* Global Reset & Base */
+/* --- Global Reset & Base Styles --- */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,101 +6,110 @@
 }
 
 body, html {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background-color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
   color: #333;
+  height: 100%;
+  overflow: hidden; /* Prevent overall scrolling */
 }
 
-/* Chat App Container */
+/* --- Chat App Container --- */
 .chat-app {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   background-color: #fff;
 }
 
-/* Topbar (if needed, style separately) */
+/* --- Topbar --- */
 .topbar {
   background-color: #fff;
-  border-bottom: 1px solid #ddd;
-  padding: 10px 20px;
+  border-bottom: 1px solid #eaeaea;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 500;
+  color: #555;
 }
 
-/* Main Content Area - Three Column Layout */
+/* --- Main Content: Three Column Layout --- */
 .main-content {
   flex: 1;
   display: flex;
-  overflow: hidden; /* Prevent entire page scrolling */
+  overflow: hidden;
 }
 
-/* Left Column: Chat List */
+/* --- Left Column: Chat List --- */
 .chat-list-container {
-  flex: 0 0 250px;
-  border-right: 1px solid #eee;
-  background-color: #fafafa;
-  overflow-y: auto;
+  flex: 0 0 260px;
+  background-color: #f9f9f9;
+  border-right: 1px solid #eaeaea;
   padding: 20px;
+  overflow-y: auto;
+  box-shadow: inset -2px 0 4px rgba(0,0,0,0.03);
 }
 
 .chat-list-container h2 {
   font-size: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   color: #333;
 }
 
-/* Chat List Items */
+/* Chat list items styled as clickable items similar to Telegram */
 .chat-item {
-  padding: 12px;
-  margin-bottom: 8px;
-  border-radius: 5px;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
   background-color: #fff;
+  border: 1px solid #eaeaea;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  border: 1px solid #eee;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .chat-item:hover {
-  background-color: #e6f7ff; /* Light blue accent on hover */
+  background-color: #e6f7ff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* Middle Column: Chat Window */
+/* --- Middle Column: Chat Window --- */
 .chat-window-container {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
   padding: 20px;
+  background-color: #ffffff;
 }
 
-/* Chat Title in Middle Column */
 .chat-title {
   font-size: 24px;
   font-weight: 600;
-  margin-bottom: 15px;
   color: #333;
-  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #eaeaea;
   padding-bottom: 10px;
 }
 
-/* Chat Window - Scrollable Messages Area Only */
+/* Chat Window (messages area) */
 .chat-window {
   flex: 1;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  overflow-y: auto;
-  padding: 15px;
   background-color: #f7f7f7;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  padding: 15px;
+  overflow-y: auto;
   margin-bottom: 15px;
 }
 
-/* Message Styles */
+/* Style individual message bubbles */
 .message {
   margin-bottom: 15px;
-  padding: 10px;
-  border-radius: 5px;
+  padding: 12px 15px;
+  border-radius: 8px;
   background-color: #fff;
+  border: 1px solid #eaeaea;
   transition: background-color 0.2s ease;
-  border: 1px solid #eee;
 }
 
 .message:hover {
@@ -110,35 +119,36 @@ body, html {
 .message-user-info {
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 
 .profile-picture {
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 12px;
   object-fit: cover;
-  border: 2px solid #e0e0e0;
+  border: 1px solid #e0e0e0;
 }
 
 .message span {
   font-size: 16px;
+  line-height: 1.5;
 }
 
-/* Chat Input Area (fixed at the bottom of the middle column) */
+/* Chat input area */
 .message-input {
   display: flex;
-  border-top: 1px solid #e0e0e0;
-  padding: 10px;
+  border-top: 1px solid #eaeaea;
+  padding: 12px;
   background-color: #fff;
 }
 
 .message-text-input {
   flex: 1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
   font-size: 16px;
   transition: border-color 0.2s ease;
 }
@@ -152,9 +162,9 @@ body, html {
   background-color: #40a9ff;
   color: #fff;
   border: none;
-  padding: 10px 15px;
-  margin-left: 10px;
-  border-radius: 5px;
+  padding: 12px 20px;
+  margin-left: 12px;
+  border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -164,18 +174,19 @@ body, html {
   background-color: #1890ff;
 }
 
-/* Right Column: Friend List */
+/* --- Right Column: Friend List --- */
 .friend-section {
-  flex: 0 0 250px;
-  padding: 20px;
+  flex: 0 0 260px;
   background-color: #f9f9f9;
-  border-left: 1px solid #eee;
+  border-left: 1px solid #eaeaea;
+  padding: 20px;
   overflow-y: auto;
+  box-shadow: inset 2px 0 4px rgba(0,0,0,0.03);
 }
 
 .friend-section h3,
 .friend-section h4 {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   color: #333;
 }
 
@@ -187,24 +198,25 @@ body, html {
 .friend-section li {
   display: flex;
   align-items: center;
-  padding: 8px;
-  margin-bottom: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
   background-color: #fff;
-  border: 1px solid #eee;
-  border-radius: 5px;
-  transition: background-color 0.2s ease;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
 }
 
 .friend-section li:hover {
   background-color: #e6f7ff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .friend-section li img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 12px;
   object-fit: cover;
 }
 
@@ -213,8 +225,8 @@ body, html {
   background-color: #40a9ff;
   color: #fff;
   border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 6px 12px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -224,23 +236,49 @@ body, html {
 }
 
 .friend-section input[type="text"] {
-  width: calc(100% - 110px);
-  padding: 8px;
+  width: calc(100% - 130px);
+  padding: 10px;
   margin-right: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
 .friend-section button.send-request {
   background-color: #40a9ff;
   color: #fff;
   border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
+  padding: 10px 14px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .friend-section button.send-request:hover {
   background-color: #1890ff;
+}
+
+/* Custom Scrollbar for Webkit (optional) */
+.chat-window::-webkit-scrollbar,
+.chat-list-container::-webkit-scrollbar,
+.friend-section::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-window::-webkit-scrollbar-track,
+.chat-list-container::-webkit-scrollbar-track,
+.friend-section::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.chat-window::-webkit-scrollbar-thumb,
+.chat-list-container::-webkit-scrollbar-thumb,
+.friend-section::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.chat-window::-webkit-scrollbar-thumb:hover,
+.chat-list-container::-webkit-scrollbar-thumb:hover,
+.friend-section::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
