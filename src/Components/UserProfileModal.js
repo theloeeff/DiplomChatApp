@@ -87,11 +87,11 @@ const UserProfileModal = ({ user: profileUser, currentUser, token, onClose, upda
               onClick={handleRemoveFriend}
               disabled={loading}
             >
-              {loading ? 'Removing...' : 'Remove Friend'}
+              {loading ? 'Удаления...' : 'Удалить из друзей'}
             </button>
           ) : requestSent ? (
             <button className="friend-request-sent-btn" disabled>
-              Request Sent
+              Запрос отправлен
             </button>
           ) : (
             <button
@@ -99,7 +99,7 @@ const UserProfileModal = ({ user: profileUser, currentUser, token, onClose, upda
               onClick={handleAddFriend}
               disabled={loading}
             >
-              {loading ? 'Sending...' : 'Add Friend'}
+              {loading ? 'Отправление...' : 'Добавить в друзья'}
             </button>
           )}
         </div>

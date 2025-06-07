@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './Styles/CreateChat.css'
 
 const CreateChat = ({ token, userId, onChatCreated }) => {
   const [chatName, setChatName] = useState('');
@@ -11,18 +12,13 @@ const CreateChat = ({ token, userId, onChatCreated }) => {
       setError('Введите название чата и участников');
       return;
     }
-
-    // Предполагаем, что участники вводятся через запятую (например, ID или логины)
     const participants = participantsInput
       .split(',')
       .map(p => p.trim())
       .filter(p => p);
-
-    // Если текущий пользователь не включён, добавляем его
     if (!participants.includes(userId)) {
       participants.push(userId);
     }
-
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/chat`,
@@ -33,7 +29,7 @@ const CreateChat = ({ token, userId, onChatCreated }) => {
       setChatName('');
       setParticipantsInput('');
       setError('');
-      if (onChatCreated) onChatCreated(); // Например, перезагрузить список чатов
+      if (onChatCreated) onChatCreated();
     } catch (err) {
       console.error('Ошибка при создании чата:', err);
       setError(err.response?.data?.error || 'Ошибка при создании чата');

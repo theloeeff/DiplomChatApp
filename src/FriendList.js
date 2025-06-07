@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import io from 'socket.io-client';
+
+const socket = io(process.env.REACT_APP_API_URL);
 
 const FriendList = ({ token, user, openDirectChat, openUserProfile }) => {
   const [friends, setFriends] = useState([]);
@@ -8,37 +11,60 @@ const FriendList = ({ token, user, openDirectChat, openUserProfile }) => {
   const [searchUsername, setSearchUsername] = useState('');
   const [error, setError] = useState('');
 
-  const fetchFriends = async () => {
+  // Use useCallback so these functions are not recreated on every render
+  const fetchFriends = useCallback(async () => {
+    if (!user) return;
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${user.id}/friends`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/users/${user.id}/friends`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setFriends(res.data.friends);
     } catch (err) {
       console.error('Error fetching friends:', err);
     }
-  };
+  }, [user, token]);
 
-  const fetchRequests = async () => {
+  const fetchRequests = useCallback(async () => {
+    if (!user) return;
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${user.id}/requests`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/users/${user.id}/requests`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setIncomingRequests(res.data.incoming);
       setOutgoingRequests(res.data.outgoing);
     } catch (err) {
       console.error('Error fetching friend requests:', err);
     }
-  };
-
-  useEffect(() => {
-    if (!user) return;
-    fetchFriends();
-    fetchRequests();
   }, [user, token]);
 
-  // Socket events for updating friend list are handled in ChatApp
-  // You could also add individual socket listeners here if needed
+  // On mount, fetch friends and requests
+  useEffect(() => {
+    fetchFriends();
+    fetchRequests();
+  }, [user, fetchFriends, fetchRequests]);  
+
+  // IMPORTANT: Ensure this component's socket instance joins the user room.
+  useEffect(() => {
+    if (user && socket) {
+      // Use the correct event name: "joinUserRoom"
+      socket.emit('joinUserRoom', user.id);
+    }
+  }, [user]);
+
+  // Listen for friend request updates via socket
+  useEffect(() => {
+    const handleFriendRequest = (data) => {
+      console.log('FriendList received friendRequestReceived event:', data);
+      fetchRequests();
+    };
+
+    socket.on('friendRequestReceived', handleFriendRequest);
+    return () => {
+      socket.off('friendRequestReceived', handleFriendRequest);
+    };
+  }, [fetchRequests]);
 
   const handleSendRequest = async () => {
     try {
@@ -97,7 +123,7 @@ const FriendList = ({ token, user, openDirectChat, openUserProfile }) => {
 
   return (
     <div className="friend-list">
-      <h3>Friends</h3>
+      <h3>Друзья</h3>
       <ul>
         {friends.map(f => (
           <li key={f._id}>
@@ -115,7 +141,7 @@ const FriendList = ({ token, user, openDirectChat, openUserProfile }) => {
         ))}
       </ul>
 
-      <h4>Incoming Friend Requests</h4>
+      <h4>Входящие запросы в друзья</h4>
       <ul>
         {incomingRequests.map(r => (
           <li key={r._id}>
@@ -133,14 +159,14 @@ const FriendList = ({ token, user, openDirectChat, openUserProfile }) => {
         ))}
       </ul>
 
-      <h4>Send Friend Request</h4>
+      <h4>Отправить запрос в друзья</h4>
       <input
         type="text"
-        placeholder="Enter username"
+        placeholder="Введите имя пользователя"
         value={searchUsername}
         onChange={(e) => setSearchUsername(e.target.value)}
       />
-      <button className="send-request" onClick={handleSendRequest}>Send</button>
+      <button className="send-request" onClick={handleSendRequest}>Отправить</button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );

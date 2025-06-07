@@ -282,3 +282,114 @@ body, html {
 .friend-section::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 }
+
+/* --- Responsive Styles --- */
+@media (max-width: 768px) {
+  html, body {
+    overflow: auto; /* Allow scrolling on small devices */
+  }
+
+  .main-content {
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  .chat-list-container,
+  .friend-section {
+    flex: 1 1 auto;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    box-shadow: none;
+  }
+
+  .chat-window-container {
+    padding: 15px;
+    order: 1;
+  }
+
+  .chat-window {
+    min-height: 300px;
+    max-height: 50vh;
+  }
+
+  .topbar {
+    flex-wrap: wrap;
+    padding: 10px 15px;
+    font-size: 16px;
+  }
+
+  .chat-title {
+    font-size: 20px;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+
+  .message-text-input,
+  .send-button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .send-button {
+    margin-left: 8px;
+  }
+
+  .friend-section li,
+  .chat-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .friend-section li button {
+    margin-left: 0;
+    margin-top: 8px;
+  }
+
+  .friend-section input[type="text"] {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+
+  .friend-section button.send-request {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-title {
+    font-size: 18px;
+  }
+
+  .message span {
+    font-size: 14px;
+  }
+
+  .topbar {
+    font-size: 14px;
+  }
+
+  .profile-picture {
+    width: 36px;
+    height: 36px;
+  }
+
+  .friend-section li img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .chat-list-container,
+  .friend-section {
+    padding: 10px;
+  }
+
+  .chat-window-container {
+    padding: 10px;
+  }
+
+  .chat-window {
+    padding: 10px;
+  }
+}

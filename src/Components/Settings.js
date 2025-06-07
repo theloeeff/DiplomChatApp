@@ -115,9 +115,9 @@ const Settings = ({ token, user, setUser, closeSettings }) => {
       
       {/* Additional controls for logout and 2FA toggle */}
       <div className="settings-extra">
-        <button onClick={handleLogout} className="settings-btn">Logout</button>
+        <button onClick={handleLogout} className="settings-btn">выйти</button>
         <button onClick={handleToggle2FA} className="settings-btn">
-          {user.twoFAEnabled ? 'Disable 2FA' : 'Enable 2FA'}
+          {user.twoFAEnabled ? 'Отключить 2х факторную аунтефикацию' : 'Включить 2х факторную аунтефикацию'}
         </button>
       </div>
     </div>

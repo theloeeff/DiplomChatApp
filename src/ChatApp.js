@@ -5,7 +5,7 @@ import Auth from './Login';
 import CreateChat from './CreateChat';
 import Topbar from './Components/Topbar';
 import FriendList from './FriendList';
-import UserProfileModal from './Components/UserProfileModal'; // new modal component
+import UserProfileModal from './Components/UserProfileModal';
 import './Styles/ChatApp.css';
 
 const { REACT_APP_API_URL } = process.env;
@@ -19,7 +19,7 @@ const ChatApp = () => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [showProfileModal, setShowProfileModal] = useState(false);
-  const [modalUser, setModalUser] = useState(null); // for profile modal
+  const [modalUser, setModalUser] = useState(null);
 
   // Ref to scroll to bottom of messages
   const messagesEndRef = useRef(null);
@@ -85,7 +85,7 @@ const ChatApp = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       socket.emit('sendMessage', newMessage);
-      setMessage(''); // Clear the input after sending
+      setMessage('');
     } catch (error) {
       console.error('Error sending message:', error);
     }
@@ -110,7 +110,7 @@ const ChatApp = () => {
     return () => socket.off('message', handleNewMessage);
   }, []);
 
-  // Socket events for real-time updates (profile updates, friend requests, new chats)
+  // Socket events for real-time updates
   useEffect(() => {
     const handleUserUpdated = (data) => {
       setMessages(prevMessages =>
@@ -120,7 +120,6 @@ const ChatApp = () => {
             : msg
         )
       );
-      // If the updated user is the current user, update local state/storage.
       if (user && user.id.toString() === data.userId.toString()) {
         const updatedUser = { ...user, ...data };
         setUser(updatedUser);
@@ -131,15 +130,15 @@ const ChatApp = () => {
     socket.on('userUpdated', handleUserUpdated);
     socket.on('friendRequestReceived', (data) => {
       console.log('New friend request received:', data);
-      // You can trigger a refresh of friend requests here or notify the user.
+      // Optionally, trigger a refresh of friend requests in FriendList via socket or re-fetch
     });
     socket.on('newChat', (data) => {
       console.log('New chat created:', data);
-      // Refresh the chat list:
       axios.get(`${REACT_APP_API_URL}/chats`, {
         headers: { Authorization: `Bearer ${token}` }
-      }).then(({ data }) => setChats(data))
-        .catch(err => console.error('Error fetching chats:', err));
+      })
+      .then(({ data }) => setChats(data))
+      .catch(err => console.error('Error fetching chats:', err));
     });
 
     return () => {
@@ -156,7 +155,7 @@ const ChatApp = () => {
     }
   }, [user]);
 
-  // Open direct chat (for one-on-one messaging) remains unchanged
+  // Open direct chat (for one-on-one messaging)
   const openDirectChat = async (friendId) => {
     try {
       const { data } = await axios.post(
@@ -164,28 +163,27 @@ const ChatApp = () => {
         { user1: user.id, user2: friendId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setSelectedChat(data.chat._id); // or data.chatId depending on your response format
+      setSelectedChat(data.chat._id);
     } catch (err) {
       console.error('Error opening direct chat:', err);
     }
   };
 
-  // New: Open user profile modal on left click of a name (in messages or friend list)
+  // Open user profile modal on click (for messages and friend list)
   const openUserProfile = (profileUser) => {
     setModalUser(profileUser);
     setShowProfileModal(true);
   };
 
-  // New: Logout function
+  // Logout function
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
     setToken('');
-    // Optionally, redirect to login page if using a router.
   };
 
-  // New: Toggle 2FA (simplified example)
+  // Toggle 2FA function
   const toggle2FA = async () => {
     try {
       const res = await axios.post(
@@ -193,7 +191,6 @@ const ChatApp = () => {
         { userId: user.id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      // Update the user state with new 2FA status
       const updatedUser = { ...user, twoFAEnabled: res.data.twoFAEnabled };
       setUser(updatedUser);
       localStorage.setItem('user', JSON.stringify(updatedUser));
@@ -228,7 +225,7 @@ const ChatApp = () => {
       <div className="main-content">
         {/* Left Column: Chat List */}
         <div className="chat-list-container">
-          <h2>Chats</h2>
+          <h2>Чаты</h2>
           {chats.map(chat => (
             <div
               key={chat._id}
@@ -242,18 +239,17 @@ const ChatApp = () => {
             token={token}
             userId={user.id}
             onChatCreated={() => {
-              axios
-                .get(`${REACT_APP_API_URL}/chats`, {
-                  headers: { Authorization: `Bearer ${token}` }
-                })
-                .then(({ data }) => setChats(data))
-                .catch(err => console.error('Error fetching chats:', err));
+              axios.get(`${REACT_APP_API_URL}/chats`, {
+                headers: { Authorization: `Bearer ${token}` }
+              })
+              .then(({ data }) => setChats(data))
+              .catch(err => console.error('Error fetching chats:', err));
             }}
           />
         </div>
         {/* Middle Column: Chat Window */}
         <div className="chat-window-container">
-          <h2 className="chat-title">Chat Window</h2>
+          <h2 className="chat-title">Чат</h2>
           <div className="chat-window">
             {selectedChat && messages.map(msg => (
               <div key={msg._id} className="message">
@@ -264,7 +260,7 @@ const ChatApp = () => {
                       src={msg.sender.profilePicture.startsWith('http')
                         ? msg.sender.profilePicture
                         : `${REACT_APP_API_URL}${msg.sender.profilePicture}`}
-                      alt={`${msg.sender.nickname || msg.sender.username}'s Profile`}
+                      alt={`Профиль ${msg.sender.nickname || msg.sender.username}`}
                       className="profile-picture"
                     />
                   )}
@@ -275,7 +271,6 @@ const ChatApp = () => {
                 <span>{msg.text}</span>
               </div>
             ))}
-            {/* Reference element to scroll into view */}
             <div ref={messagesEndRef} />
           </div>
           {selectedChat && (
@@ -285,7 +280,7 @@ const ChatApp = () => {
                 className="message-text-input"
                 value={message}
                 onChange={e => setMessage(e.target.value)}
-                placeholder="Enter your message..."
+                placeholder="Введите сообщение..."
                 onKeyDown={e => {
                   if (e.key === 'Enter') {
                     sendMessage();
@@ -293,7 +288,7 @@ const ChatApp = () => {
                 }}
               />
               <button className="send-button" onClick={sendMessage}>
-                Send
+                Отправить
               </button>
             </div>
           )}
@@ -316,7 +311,6 @@ const ChatApp = () => {
           token={token}
         />
       )}
-
     </div>
   );
 };

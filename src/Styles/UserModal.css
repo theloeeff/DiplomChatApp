@@ -54,3 +54,69 @@
     background: #1890ff;
   }
   
+  .settings-menu {
+  text-align: left;
+}
+
+.settings-menu form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.settings-menu label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.settings-menu input[type="text"],
+.settings-menu input[type="file"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  font-size: 14px;
+}
+
+.settings-menu button[type="submit"] {
+  background-color: #40a9ff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.settings-menu button[type="submit"]:hover {
+  background-color: #1890ff;
+}
+
+.settings-menu button[type="submit"]:disabled {
+  background-color: #a0cfff;
+  cursor: not-allowed;
+}
+
+.settings-extra {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.settings-btn {
+  background-color: #f5222d;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.settings-btn:hover {
+  background-color: #cf1322;
+}
