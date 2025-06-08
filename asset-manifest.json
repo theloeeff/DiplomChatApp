@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/DiplomChatApp/static/css/main.5df4e69f.css",
-    "main.js": "/DiplomChatApp/static/js/main.df54a2b6.js",
+    "main.js": "/DiplomChatApp/static/js/main.20448e53.js",
     "static/media/Logo.png": "/DiplomChatApp/static/media/Logo.79449031a8a4ed0729c3.png",
     "static/media/Settings.svg": "/DiplomChatApp/static/media/Settings.c22022308bd893dcbb03ed386d888f01.svg",
     "index.html": "/DiplomChatApp/index.html",
     "main.5df4e69f.css.map": "/DiplomChatApp/static/css/main.5df4e69f.css.map",
-    "main.df54a2b6.js.map": "/DiplomChatApp/static/js/main.df54a2b6.js.map"
+    "main.20448e53.js.map": "/DiplomChatApp/static/js/main.20448e53.js.map"
   },
   "entrypoints": [
     "static/css/main.5df4e69f.css",
-    "static/js/main.df54a2b6.js"
+    "static/js/main.20448e53.js"
   ]
 }
